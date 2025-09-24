@@ -167,6 +167,7 @@ h1 {
     background-color: #fff8e1;
     padding: 15px;
     border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .info h3 {
@@ -180,4 +181,33 @@ h1 {
 
 .info li {
     margin-bottom: 5px;
+}
+
+.other-demos {
+    background-color: #e8f4f8;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.other-demos h3 {
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+.demo-link {
+    display: block;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #2980b9;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.demo-link:hover {
+    background-color: #f0f8ff;
+    border-color: #3498db;
+    transform: translateX(5px);
 }
