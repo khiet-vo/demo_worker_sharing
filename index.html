@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalStorage & Worker Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tab Communication with LocalStorage & Web Worker</h1>
+        
+        <div class="tab-identifier">
+            <h2>Tab ID: <span id="tabId"></span></h2>
+            <p>Open this page in another tab to see real-time communication</p>
+        </div>
+        
+        <div class="control-panel">
+            <h3>Send Message:</h3>
+            <input type="text" id="messageInput" placeholder="Enter a message...">
+            <button id="sendButton">Send Message</button>
+        </div>
+        
+        <div class="message-log">
+            <h3>Message Log:</h3>
+            <div id="messageLog"></div>
+        </div>
+        
+        <div class="info">
+            <h3>How It Works:</h3>
+            <ol>
+                <li>Enter a message and click "Send" in any tab</li>
+                <li>The message is saved to localStorage</li>
+                <li>A Web Worker in other tabs detects the change</li>
+                <li>The worker sends the message to the main thread</li>
+                <li>All tabs display the updated message</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
+</body>
+</html>
