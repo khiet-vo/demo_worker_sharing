@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Điều Tra: Liên Minh NVIDIA x Palantir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* Warm neutral background */
+            color: #1c1917;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e7e5e4;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #57534e;
+            border-radius: 4px;
+        }
+
+        /* Chart Container Styling - MANDATORY */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .nav-item.active {
+            background-color: #1c1917;
+            color: #ffffff;
+            border-bottom: 2px solid #ef4444;
+        }
+
+        .risk-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutral (Stone/Gray) with Alert Red accents for critical warnings and Dark Charcoal for authority. -->
+    <!-- Application Structure Plan: 
+         Designed as an "Investigative Dashboard" with 4 core sections:
+         1. "Tổng Quan Mối Đe Dọa" (Threat Overview): Executive summary of the monopoly.
+         2. "Lũng Đoạn Thị Trường" (Market Manipulation): Financial analysis and competitor suppression.
+         3. "Giám Sát & Quyền Riêng Tư" (Surveillance & Privacy): The ethical cost of the AI hardware/software merger.
+         4. "Cơ Chế Tham Nhũng" (Corruption Mechanism): Interactive diagram of the 'revolving door' and government contracts.
+         User Flow: Users start with the big picture, then drill down into specific verticals (Money, Data, Power) via the sidebar/top nav. 
+         Why: This structure allows users to digest complex accusations one domain at a time, moving from abstract financial dominance to concrete ethical violations.
+    -->
+    <!-- Visualization & Content Choices:
+         1. Market Control (Bar Chart): Shows the massive disparity in AI compute share.
+         2. Price Manipulation (Line Chart): Simulates cost increases post-merger.
+         3. Risk Radar (Radar Chart): Multidimensional risk assessment (Ethics, Privacy, Security).
+         4. Corruption Flow (Interactive List/Diagram): Shows the flow of money and influence using HTML/CSS cards.
+         Justification: Charts provide immediate visual proof of the "imbalance". Interactive lists allow users to explore specific "evidence" without being overwhelmed.
+         Confirmation: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="min-h-screen flex flex-col md:flex-row">
+
+    <!-- Sidebar Navigation -->
+    <nav class="bg-stone-200 w-full md:w-64 flex-shrink-0 border-r border-stone-300 flex flex-col">
+        <div class="p-6 border-b border-stone-300 bg-stone-800 text-white">
+            <h1 class="text-xl font-bold tracking-tight">INVESTIGATOR <span class="text-red-500">AI</span></h1>
+            <p class="text-xs text-stone-400 mt-1">Hồ sơ mật: NV-PLTR</p>
+        </div>
+        <div class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1">
+                <li>
+                    <button onclick="app.navigate('overview')" id="nav-overview" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-300 transition-colors font-medium text-stone-700 active">
+                        <span class="mr-2">⚠</span> Tổng Quan Nguy Cơ
+                    </button>
+                </li>
+                <li>
+                    <button onclick="app.navigate('market')" id="nav-market" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-300 transition-colors font-medium text-stone-700">
+                        <span class="mr-2">📉</span> Lũng Đoạn Thị Trường
+                    </button>
+                </li>
+                <li>
+                    <button onclick="app.navigate('surveillance')" id="nav-surveillance" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-300 transition-colors font-medium text-stone-700">
+                        <span class="mr-2">👁️</span> Giám Sát Toàn Cầu
+                    </button>
+                </li>
+                <li>
+                    <button onclick="app.navigate('corruption')" id="nav-corruption" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-300 transition-colors font-medium text-stone-700">
+                        <span class="mr-2">🤝</span> Mạng Lưới Lợi Ích
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="p-4 border-t border-stone-300 text-xs text-stone-500">
+            <p>Dữ liệu mô phỏng dựa trên các kịch bản rủi ro giả định.</p>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-8 relative">
+        <div id="content-area" class="max-w-5xl mx-auto animate-fade-in">
+            <!-- Dynamic Content Will Be Injected Here -->
+        </div>
+    </main>
+
+    <script>
+        // --- Data Store ---
+        const reportData = {
+            overview: {
+                title: "Siêu Liên Minh: Mối Đe Dọa Tiềm Tàng",
+                intro: "Báo cáo này phân tích viễn cảnh đen tối khi năng lực phần cứng AI của NVIDIA kết hợp với nền tảng phân tích dữ liệu quân sự của Palantir. Sự kết hợp này không chỉ tạo ra một thế lực độc quyền mà còn đe dọa trực tiếp đến sự minh bạch của thị trường và quyền riêng tư cá nhân.",
+                stats: [
+                    { label: "Thị Phần Chip AI", value: "92%", color: "text-red-600" },
+                    { label: "Dữ Liệu Chính Phủ", value: "75%", color: "text-orange-600" },
+                    { label: "Rủi Ro Độc Quyền", value: "Cực Cao", color: "text-red-800" }
+                ],
+                warnings: [
+                    "Kiểm soát hoàn toàn chuỗi cung ứng tính toán AI.",
+                    "Tích hợp sâu vào hệ thống quốc phòng mà không có giám sát.",
+                    "Khả năng thao túng giá cổ phiếu thông qua các chu kỳ cường điệu AI."
+                ]
+            },
+            market: {
+                title: "Cơ Chế Lũng Đoạn Thị Trường",
+                intro: "Bằng cách kiểm soát 'nguồn oxy' của AI (GPU) và 'bộ não' phân tích (Foundry), liên minh này có thể bóp nghẹt đối thủ cạnh tranh và thao túng giá cả trên quy mô toàn cầu.",
+                tactics: [
+                    { title: "Bán Kèm Ép Buộc (Bundling)", desc: "Khách hàng muốn mua chip H100 buộc phải ký hợp đồng sử dụng phần mềm Palantir dài hạn." },
+                    { title: "Ưu Tiên Đơn Hàng", desc: "Các công ty đối thủ hoặc startup không sử dụng hệ sinh thái này sẽ bị trì hoãn giao hàng chip đến 18 tháng." },
+                    { title: "Thổi Giá Cổ Phiếu", desc: "Sử dụng các hợp đồng chính phủ bí mật để tạo ra doanh thu ảo, đẩy giá trị vốn hóa lên mức không tưởng." }
+                ]
+            },
+            surveillance: {
+                title: "Kỷ Nguyên Giám Sát & Mất Quyền Riêng Tư",
+                intro: "Sự nguy hiểm thực sự nằm ở việc phần cứng NVIDIA xử lý dữ liệu ngay tại biên (edge), được điều phối bởi các thuật toán theo dõi của Palantir. Không còn nơi nào để ẩn nấp.",
+                risks: [
+                    { area: "Dữ liệu sinh trắc học", score: 95 },
+                    { area: "Dự đoán hành vi", score: 88 },
+                    { area: "Giám sát tài chính", score: 92 },
+                    { area: "Kiểm soát dư luận", score: 80 }
+                ]
+            },
+            corruption: {
+                title: "Mạng Lưới Tham Nhũng & 'Cửa Xoay'",
+                intro: "Phân tích mối quan hệ giữa các giám đốc điều hành và các quan chức chính phủ cho thấy một mô hình 'Cửa Xoay' (Revolving Door) đáng báo động, nơi chính sách công bị bẻ cong để phục vụ lợi ích tư nhân.",
+                cases: [
+                    { id: 1, role: "Cựu Tướng Quân Đội", action: "Gia nhập HĐQT sau khi ký duyệt hợp đồng mua sắm 5 tỷ USD.", impact: "Xung đột lợi ích" },
+                    { id: 2, role: "Nhà Lập Pháp AI", action: "Được tài trợ chiến dịch tranh cử thông qua các quỹ vỏ bọc.", impact: "Luật pháp lỏng lẻo" },
+                    { id: 3, role: "Chuyên Gia Đánh Giá", action: "Viết báo cáo thiên vị để hạ thấp đối thủ cạnh tranh.", impact: "Thao túng thị trường" }
+                ]
+            }
+        };
+
+        // --- Application State & Logic ---
+        const app = {
+            currentView: 'overview',
+            charts: {},
+
+            init: function() {
+                this.navigate('overview');
+            },
+
+            navigate: function(viewId) {
+                this.currentView = viewId;
+                
+                // Update Navigation Styling
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                document.getElementById(`nav-${viewId}`).classList.add('active');
+
+                // Render Content
+                this.render(viewId);
+            },
+
+            render: function(viewId) {
+                const container = document.getElementById('content-area');
+                container.innerHTML = ''; // Clear current content
+                
+                const data = reportData[viewId];
+
+                // Header Section
+                const header = document.createElement('div');
+                header.className = "mb-8";
+                header.innerHTML = `
+                    <h2 class="text-3xl font-bold text-stone-800 mb-3">${data.title}</h2>
+                    <p class="text-lg text-stone-600 leading-relaxed border-l-4 border-red-500 pl-4 bg-white p-4 rounded shadow-sm">${data.intro}</p>
+                `;
+                container.appendChild(header);
+
+                // Specific View Rendering
+                if (viewId === 'overview') this.renderOverview(container, data);
+                else if (viewId === 'market') this.renderMarket(container, data);
+                else if (viewId === 'surveillance') this.renderSurveillance(container, data);
+                else if (viewId === 'corruption') this.renderCorruption(container, data);
+            },
+
+            renderOverview: function(container, data) {
+                // Stats Grid
+                const statsGrid = document.createElement('div');
+                statsGrid.className = "grid grid-cols-1 md:grid-cols-3 gap-6 mb-10";
+                data.stats.forEach(stat => {
+                    statsGrid.innerHTML += `
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-stone-800 text-center">
+                            <div class="text-sm uppercase tracking-wide text-stone-500 mb-1">${stat.label}</div>
+                            <div class="text-4xl font-bold ${stat.color}">${stat.value}</div>
+                        </div>
+                    `;
+                });
+                container.appendChild(statsGrid);
+
+                // Comparison Chart
+                const chartSection = document.createElement('div');
+                chartSection.className = "bg-white p-6 rounded-lg shadow-md mb-8";
+                chartSection.innerHTML = `
+                    <h3 class="text-xl font-bold text-stone-800 mb-4">Sự Mất Cân Bằng Quyền Lực</h3>
+                    <div class="chart-container">
+                        <canvas id="overviewChart"></canvas>
+                    </div>
+                    <p class="text-sm text-stone-500 mt-2 text-center italic">Tỷ lệ nắm giữ hợp đồng quốc phòng AI so với đối thủ (Dữ liệu giả lập)</p>
+                `;
+                container.appendChild(chartSection);
+
+                // Warnings List
+                const warningBox = document.createElement('div');
+                warningBox.className = "bg-red-50 border border-red-200 p-6 rounded-lg";
+                warningBox.innerHTML = `<h3 class="font-bold text-red-800 mb-3 uppercase text-sm">Cảnh Báo Đỏ</h3><ul class="space-y-2 list-disc pl-5 text-red-900">${data.warnings.map(w => `<li>${w}</li>`).join('')}</ul>`;
+                container.appendChild(warningBox);
+
+                // Initialize Chart
+                setTimeout(() => {
+                    const ctx = document.getElementById('overviewChart').getContext('2d');
+                    if (this.charts.overview) this.charts.overview.destroy();
+                    this.charts.overview = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Liên Minh NV-PLTR', 'Microsoft/OpenAI', 'Google', 'Khác'],
+                            datasets: [{
+                                data: [65, 15, 12, 8],
+                                backgroundColor: ['#1c1917', '#a8a29e', '#d6d3d1', '#f5f5f4'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom' }
+                            }
+                        }
+                    });
+                }, 0);
+            },
+
+            renderMarket: function(container, data) {
+                // Layout: Chart on left, Tactics on right
+                const layout = document.createElement('div');
+                layout.className = "grid grid-cols-1 lg:grid-cols-2 gap-8";
+
+                // Price Manipulation Chart
+                const chartCol = document.createElement('div');
+                chartCol.className = "bg-white p-6 rounded-lg shadow-md";
+                chartCol.innerHTML = `
+                    <h3 class="font-bold text-stone-800 mb-2">Mô Phỏng Giá Cung Ứng AI</h3>
+                    <div class="chart-container">
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                    <p class="text-xs text-stone-500 mt-2">Biểu đồ thể hiện sự gia tăng chi phí cho khách hàng khi thị trường bị độc quyền.</p>
+                `;
+
+                // Tactics List
+                const tacticsCol = document.createElement('div');
+                tacticsCol.innerHTML = `<h3 class="font-bold text-stone-800 mb-4 text-xl">Chiến Thuật Bóp Nghẹt</h3>`;
+                data.tactics.forEach(tactic => {
+                    tacticsCol.innerHTML += `
+                        <div class="mb-4 p-4 bg-white border-l-4 border-stone-800 shadow-sm hover:bg-stone-50 transition-colors cursor-pointer">
+                            <h4 class="font-bold text-stone-900 flex justify-between items-center">
+                                ${tactic.title} <span class="text-xs bg-stone-200 px-2 py-1 rounded">Chiến thuật</span>
+                            </h4>
+                            <p class="text-stone-600 text-sm mt-1">${tactic.desc}</p>
+                        </div>
+                    `;
+                });
+
+                layout.appendChild(chartCol);
+                layout.appendChild(tacticsCol);
+                container.appendChild(layout);
+
+                // Init Chart
+                setTimeout(() => {
+                    const ctx = document.getElementById('marketChart').getContext('2d');
+                    if (this.charts.market) this.charts.market.destroy();
+                    this.charts.market = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['2020', '2021', '2022', '2023', '2024', '2025 (Dự báo)'],
+                            datasets: [
+                                {
+                                    label: 'Giá Hệ Thống NV-PLTR',
+                                    data: [100, 120, 180, 250, 400, 650],
+                                    borderColor: '#ef4444',
+                                    tension: 0.4,
+                                    fill: false
+                                },
+                                {
+                                    label: 'Giá Trung Bình Thị Trường',
+                                    data: [100, 105, 110, 115, 120, 125],
+                                    borderColor: '#78716c',
+                                    borderDash: [5, 5],
+                                    tension: 0.4,
+                                    fill: false
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                tooltip: {
+                                    mode: 'index',
+                                    intersect: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    title: { display: true, text: 'Chỉ số giá (Index)' }
+                                }
+                            }
+                        }
+                    });
+                }, 0);
+            },
+
+            renderSurveillance: function(container, data) {
+                const grid = document.createElement('div');
+                grid.className = "grid grid-cols-1 md:grid-cols-2 gap-8";
+
+                // Radar Chart
+                const chartDiv = document.createElement('div');
+                chartDiv.className = "bg-white p-6 rounded-lg shadow-md";
+                chartDiv.innerHTML = `
+                    <h3 class="text-center font-bold mb-2">Ma Trận Rủi Ro Xã Hội</h3>
+                    <div class="chart-container">
+                        <canvas id="surveillanceChart"></canvas>
+                    </div>
+                `;
+
+                // Interactive Detail Cards
+                const infoDiv = document.createElement('div');
+                infoDiv.className = "space-y-4";
+                data.risks.forEach(risk => {
+                    infoDiv.innerHTML += `
+                        <div class="risk-card bg-white p-4 rounded-lg shadow border border-stone-200 flex items-center justify-between">
+                            <div>
+                                <h4 class="font-bold text-stone-800">${risk.area}</h4>
+                                <div class="w-32 h-2 bg-stone-200 rounded-full mt-2 overflow-hidden">
+                                    <div class="h-full bg-red-600" style="width: ${risk.score}%"></div>
+                                </div>
+                            </div>
+                            <div class="text-2xl font-bold text-red-600">${risk.score}/100</div>
+                        </div>
+                    `;
+                });
+
+                grid.appendChild(chartDiv);
+                grid.appendChild(infoDiv);
+                container.appendChild(grid);
+
+                // Init Chart
+                setTimeout(() => {
+                    const ctx = document.getElementById('surveillanceChart').getContext('2d');
+                    if (this.charts.surveillance) this.charts.surveillance.destroy();
+                    this.charts.surveillance = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['Quyền Riêng Tư', 'An Ninh', 'Công Bằng', 'Minh Bạch', 'Trách Nhiệm'],
+                            datasets: [{
+                                label: 'Mức Độ Nguy Hiểm',
+                                data: [95, 80, 90, 20, 30], // Low transparency/accountability meant high risk, inverted for visual impact? No, lets chart "Risk Level"
+                                fill: true,
+                                backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                                borderColor: '#ef4444',
+                                pointBackgroundColor: '#ef4444',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: '#ef4444'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    angleLines: { color: '#e7e5e4' },
+                                    grid: { color: '#e7e5e4' },
+                                    pointLabels: { font: { size: 12 } },
+                                    suggestedMin: 0,
+                                    suggestedMax: 100
+                                }
+                            }
+                        }
+                    });
+                }, 0);
+            },
+
+            renderCorruption: function(container, data) {
+                // Intro Text
+                const desc = document.createElement('div');
+                desc.className = "mb-6 text-stone-700";
+                desc.innerHTML = `<p>Sơ đồ dưới đây minh họa cách dòng tiền và quyền lực luân chuyển khép kín (The Loop), tạo ra những chính sách có lợi cho tập đoàn thay vì người dân.</p>`;
+                container.appendChild(desc);
+
+                // Interactive "Flow" Diagram (using Grid/Flex instead of SVG)
+                const diagram = document.createElement('div');
+                diagram.className = "bg-stone-800 p-8 rounded-xl shadow-inner mb-8 text-white relative overflow-hidden";
+                
+                // Simple CSS representation of a cycle
+                diagram.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center items-center h-full relative z-10">
+                        <!-- Node 1 -->
+                        <div class="p-4 border-2 border-red-500 rounded bg-stone-900 bg-opacity-80 hover:bg-red-900 transition-colors cursor-pointer group">
+                            <div class="text-3xl mb-2">🏛️</div>
+                            <h4 class="font-bold">Chính Phủ</h4>
+                            <p class="text-xs text-stone-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Ban hành chính sách ưu đãi</p>
+                        </div>
+                        
+                        <!-- Arrow Right -->
+                        <div class="hidden md:block text-2xl text-stone-500">
+                            Hợp đồng &rarr;
+                        </div>
+
+                        <!-- Node 2 -->
+                        <div class="p-4 border-2 border-red-500 rounded bg-stone-900 bg-opacity-80 hover:bg-red-900 transition-colors cursor-pointer group">
+                            <div class="text-3xl mb-2">🏢</div>
+                            <h4 class="font-bold">Tập Đoàn (NV-PLTR)</h4>
+                            <p class="text-xs text-stone-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Lợi nhuận khổng lồ</p>
+                        </div>
+
+                        <!-- Arrow Down (Visually handled by grid layout flow in mobile, logical flow here) -->
+                        
+                        <!-- Connector for Cycle (Visual only) -->
+                        <div class="hidden md:block col-span-3 h-8"></div>
+
+                        <!-- Node 3 -->
+                        <div class="md:col-start-2 p-4 border-2 border-stone-500 border-dashed rounded bg-stone-900 bg-opacity-50 hover:bg-stone-700 transition-colors cursor-pointer group">
+                            <div class="text-3xl mb-2">👤</div>
+                            <h4 class="font-bold">Quan Chức Về Hưu</h4>
+                            <p class="text-xs text-stone-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Nhận ghế HĐQT lương cao</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative background element -->
+                    <div class="absolute inset-0 opacity-10 pointer-events-none flex items-center justify-center">
+                        <div class="w-64 h-64 border-8 border-stone-600 rounded-full"></div>
+                    </div>
+                `;
+                container.appendChild(diagram);
+
+                // Case Studies
+                const casesTitle = document.createElement('h3');
+                casesTitle.className = "font-bold text-stone-800 text-xl mb-4";
+                casesTitle.innerText = "Hồ Sơ Điển Hình (Mô phỏng)";
+                container.appendChild(casesTitle);
+
+                const casesGrid = document.createElement('div');
+                casesGrid.className = "grid grid-cols-1 md:grid-cols-3 gap-6";
+                data.cases.forEach(c => {
+                    casesGrid.innerHTML += `
+                        <div class="bg-white p-5 rounded border border-stone-200 hover:border-red-400 transition-colors">
+                            <div class="text-xs font-bold text-stone-400 uppercase mb-2">Hồ sơ #${c.id}</div>
+                            <h4 class="font-bold text-lg mb-2">${c.role}</h4>
+                            <p class="text-stone-600 text-sm mb-3 h-10">${c.action}</p>
+                            <div class="bg-red-100 text-red-800 px-3 py-1 rounded text-xs inline-block font-semibold">Hậu quả: ${c.impact}</div>
+                        </div>
+                    `;
+                });
+                container.appendChild(casesGrid);
+            }
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
